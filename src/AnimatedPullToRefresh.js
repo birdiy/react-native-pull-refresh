@@ -8,11 +8,11 @@ import {
   UIManager,
   Dimensions,
 } from 'react-native';
+import { DangerZone } from 'expo';
 
-import PropTypes from 'prop-types';
-import Animation from 'lottie-react-native';
+const { Lottie: Animation } = DangerZone;
 
-class AnimatedPullToRefresh extends React.Component {
+export default class AnimatedPullToRefresh extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -293,5 +293,3 @@ class AnimatedPullToRefresh extends React.Component {
     );
   }
 }
-
-module.exports = AnimatedPullToRefresh;
