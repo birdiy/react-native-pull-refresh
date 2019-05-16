@@ -20,7 +20,6 @@ export default class AnimatedPullToRefresh extends React.Component {
       refreshHeight: new Animated.Value(0),
       currentY: 0,
       isScrollFree: false,
-
       isRefreshAnimationStarted: false,
       isRefreshAnimationEnded: false,
       initAnimationProgress: new Animated.Value(0),
@@ -52,6 +51,11 @@ export default class AnimatedPullToRefresh extends React.Component {
      */
     paddingTop: PropTypes.number,
     /**
+     * Animation duration
+     * @type {Integer}
+     */
+    duration: PropTypes.number,
+    /**
      * Callback after refresh event
      * @type {Function}
      */
@@ -76,6 +80,7 @@ export default class AnimatedPullToRefresh extends React.Component {
   static defaultProps = {
     pullHeight: 180,
     paddingTop: 0,
+    duration: 1000,
     animationBackgroundColor: 'white',
   };
 
@@ -135,10 +140,6 @@ export default class AnimatedPullToRefresh extends React.Component {
           Animated.spring(this.state.refreshHeight, {
             toValue: -this.props.pullHeight,
           }),
-          Animated.timing(this.state.initAnimationProgress, {
-            toValue: 1,
-            duration: 1000,
-          }),
         ]).start(() => {
           this.state.initAnimationProgress.setValue(0);
           this.setState({isRefreshAnimationStarted: true});
@@ -161,7 +162,7 @@ export default class AnimatedPullToRefresh extends React.Component {
 
     Animated.timing(this.state.repeatAnimationProgress, {
       toValue: 1,
-      duration: 1000,
+      duration: this.props.duration,
     }).start(() => {
       if (this.props.isRefreshing) {
         this.onRepeatAnimation();
@@ -177,7 +178,7 @@ export default class AnimatedPullToRefresh extends React.Component {
     Animated.sequence([
       Animated.timing(this.state.finalAnimationProgress, {
         toValue: 1,
-        duration: 1000,
+        duration: this.props.duration,
       }),
       Animated.spring(this.state.refreshHeight, {
         toValue: 0,
