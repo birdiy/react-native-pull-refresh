@@ -47,6 +47,11 @@ export default class AnimatedPullToRefresh extends React.Component {
      */
     pullHeight: PropTypes.number,
     /**
+     * Animation Top Padding
+     * @type {Integer}
+     */
+    paddingTop: PropTypes.number,
+    /**
      * Callback after refresh event
      * @type {Function}
      */
@@ -70,6 +75,7 @@ export default class AnimatedPullToRefresh extends React.Component {
 
   static defaultProps = {
     pullHeight: 180,
+    paddingTop: 0,
     animationBackgroundColor: 'white',
   };
 
@@ -217,7 +223,7 @@ export default class AnimatedPullToRefresh extends React.Component {
 
     const animationStyle = {
       position: 'absolute',
-      top: 0,
+      top: this.props.paddingTop,
       bottom: 0,
       right: 0,
       left: 0,
